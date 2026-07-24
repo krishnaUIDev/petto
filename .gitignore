@@ -1,0 +1,40 @@
+# Node & Monorepo
+node_modules/
+.pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+npm-debug.log*
+
+# Next.js Web Portal
+.next/
+out/
+build/
+
+# Vite & Desktop Frontend
+dist/
+dist-ssr/
+*.local
+
+# Rust & Tauri
+apps/desktop/src-tauri/target/
+target/
+
+# Environment Variables
+.env
+.env*.local
+
+# Operating System & IDE Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary Logs
+*.log

@@ -1,0 +1,11 @@
+{
+  "name": "petto-monorepo",
+  "private": true,
+  "scripts": {
+    "dev:desktop": "pnpm --filter @petto/desktop dev",
+    "dev:web": "pnpm --filter @petto/web dev",
+    "build:shared": "pnpm --filter @petto/shared build",
+    "build:web": "pnpm --filter @petto/web build",
+    "build:desktop": "pnpm --filter @petto/desktop build"
+  }
+}
