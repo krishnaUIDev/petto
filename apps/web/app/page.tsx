@@ -132,12 +132,22 @@ export default function LandingPage() {
           </p>
 
           <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-            <button className="btn btn-primary">
-              <Apple size={20} /> Download for macOS
-            </button>
-            <button className="btn btn-secondary">
-              <Monitor size={20} /> Download for Windows
-            </button>
+            <a
+              href="https://github.com/krishnaUIDev/petto/releases/latest"
+              target="_blank"
+              rel="noreferrer"
+              className="btn btn-primary"
+            >
+              <Apple size={20} /> Download for macOS (.dmg)
+            </a>
+            <a
+              href="https://github.com/krishnaUIDev/petto/releases/latest"
+              target="_blank"
+              rel="noreferrer"
+              className="btn btn-secondary"
+            >
+              <Monitor size={20} /> Download for Windows (.exe)
+            </a>
           </div>
         </div>
 
