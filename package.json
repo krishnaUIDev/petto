@@ -1,11 +1,12 @@
 {
-  "name": "petto-monorepo",
+  "name": "petto",
   "private": true,
   "scripts": {
-    "dev:desktop": "pnpm --filter @petto/desktop dev",
-    "dev:web": "pnpm --filter @petto/web dev",
-    "build:shared": "pnpm --filter @petto/shared build",
-    "build:web": "pnpm --filter @petto/web build",
-    "build:desktop": "pnpm --filter @petto/desktop build"
+    "dev:web": "pnpm -F @petto/web dev",
+    "dev:desktop": "pnpm -F @petto/desktop dev",
+    "dev:tauri": "pnpm -F @petto/desktop tauri dev",
+    "build:web": "pnpm -F @petto/web build",
+    "build:desktop": "pnpm -F @petto/desktop build",
+    "build:dmg": "pnpm -F @petto/desktop tauri build"
   }
 }
