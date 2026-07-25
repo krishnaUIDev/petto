@@ -120,10 +120,8 @@ export default function LandingPage() {
 
           <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
             <a
-              href="https://github.com/krishnaUIDev/petto/releases/latest/download/Petto.dmg"
+              href="/downloads/Petto.dmg"
               download="Petto.dmg"
-              target="_blank"
-              rel="noreferrer"
               className="btn btn-primary"
             >
               <Apple size={20} /> Download for macOS (.dmg)
