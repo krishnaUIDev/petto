@@ -90,16 +90,6 @@ export default function LandingPage() {
         }}
       >
         <div>
-          <div
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '8px',
-              padding: '6px 16px',
-              borderRadius: '9999px',
-              background: 'rgba(139, 92, 246, 0.15)',
-              color: 'var(--accent-violet)',
-              fontWeight: 600,
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 14px', borderRadius: '9999px', background: 'rgba(139, 92, 246, 0.15)', border: '1px solid rgba(139, 92, 246, 0.3)', color: '#c084fc', fontSize: '0.82rem', fontWeight: 700, marginBottom: '20px' }}>
             <Sparkles size={14} /> 14,820+ Companions Adopted Worldwide • 100% Free & Open Source
           </div>

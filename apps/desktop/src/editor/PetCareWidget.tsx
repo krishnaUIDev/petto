@@ -115,7 +115,7 @@ export default function PetCareWidget({ pet, onUpdatePetStats }: PetCareWidgetPr
         {/* Happiness */}
         <div>
           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', fontWeight: 600, color: '#cbd5e1', marginBottom: '3px' }}>
-            <span><Heart size={12} color="#ec4899" inline /> Happiness</span>
+            <span><Heart size={12} color="#ec4899" /> Happiness</span>
             <span>{happiness}%</span>
           </div>
           <div style={{ width: '100%', height: '6px', background: '#0f172a', borderRadius: '9999px', overflow: 'hidden' }}>
@@ -137,7 +137,7 @@ export default function PetCareWidget({ pet, onUpdatePetStats }: PetCareWidgetPr
         {/* Energy */}
         <div>
           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', fontWeight: 600, color: '#cbd5e1', marginBottom: '3px' }}>
-            <span><Zap size={12} color="#3b82f6" inline /> Energy</span>
+            <span><Zap size={12} color="#3b82f6" /> Energy</span>
             <span>{energy}%</span>
           </div>
           <div style={{ width: '100%', height: '6px', background: '#0f172a', borderRadius: '9999px', overflow: 'hidden' }}>

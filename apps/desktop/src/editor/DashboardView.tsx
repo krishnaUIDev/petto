@@ -4,6 +4,7 @@ import AdoptionWizard from './AdoptionWizard';
 import CustomPetCreator from './CustomPetCreator';
 import AdoptionCertificate from './AdoptionCertificate';
 import PetCareWidget from './PetCareWidget';
+import AuthModal from './AuthModal';
 import { Heart, Plus, Sparkles, Award, User, LogIn, LogOut } from 'lucide-react';
 
 interface DashboardViewProps {
