@@ -1,4 +1,5 @@
 {
   "framework": "nextjs",
-  "buildCommand": "pnpm --filter @petto/web build"
+  "buildCommand": "pnpm --filter @petto/web build",
+  "outputDirectory": "apps/web/.next"
 }
