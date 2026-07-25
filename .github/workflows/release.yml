@@ -4,6 +4,15 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'apps/desktop/**'
+      - 'packages/shared/**'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+    paths-ignore:
+      - 'apps/web/**'
+      - 'README.md'
+      - '.github/workflows/deploy-web.yml'
     tags:
       - 'v*'
 
