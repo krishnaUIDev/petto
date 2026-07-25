@@ -1,7 +1,7 @@
 {
   "name": "petto",
   "private": true,
-  "version": "0.1.8",
+  "version": "0.1.9",
   "scripts": {
     "dev": "pnpm -F @petto/desktop tauri dev",
     "dev:app": "pnpm -F @petto/desktop tauri dev",
