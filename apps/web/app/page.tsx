@@ -127,10 +127,8 @@ export default function LandingPage() {
               <Apple size={20} /> Download for macOS (.dmg)
             </a>
             <a
-              href="https://github.com/krishnaUIDev/petto/releases/latest/download/Petto-setup.exe"
+              href="/downloads/Petto-setup.exe"
               download="Petto-setup.exe"
-              target="_blank"
-              rel="noreferrer"
               className="btn btn-secondary"
             >
               <Monitor size={20} /> Download for Windows (.exe)
