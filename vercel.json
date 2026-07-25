@@ -1,5 +1,6 @@
 {
   "framework": "nextjs",
   "buildCommand": "pnpm --filter @petto/web build",
-  "outputDirectory": "apps/web/.next"
+  "outputDirectory": "apps/web/.next",
+  "ignoreCommand": "git log -1 --pretty=format:'%B' | grep -qE 'chore\\(release\\)|\\[skip ci\\]' && exit 0 || exit 1"
 }

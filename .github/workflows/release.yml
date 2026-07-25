@@ -44,7 +44,7 @@ jobs:
           node -e "const fs=require('fs'); const p=require('./apps/desktop/src-tauri/tauri.conf.json'); p.version='$NEW_VER'; fs.writeFileSync('./apps/desktop/src-tauri/tauri.conf.json', JSON.stringify(p, null, 2)+'\n')"
           
           git add package.json apps/desktop/package.json apps/desktop/src-tauri/tauri.conf.json
-          git commit -m "chore(release): v$NEW_VER"
+          git commit -m "chore(release): v$NEW_VER [skip ci]"
           git tag "v$NEW_VER"
           git push origin HEAD:main --tags
 
