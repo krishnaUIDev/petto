@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import LaptopMockup from './components/LaptopMockup';
 import WebPetSandbox from './components/WebPetSandbox';
 import CertificatePreviewer from './components/CertificatePreviewer';
+import PetCustomizerStudio from './components/PetCustomizerStudio';
+import OSInstallerGuide from './components/OSInstallerGuide';
 import { PRESET_PETS } from '@petto/shared';
 import { Apple, Monitor, Sparkles, Heart, FileCheck, Upload, Disc as Discord, Instagram, ArrowRight } from 'lucide-react';
 
@@ -151,6 +153,16 @@ export default function LandingPage() {
       {/* Certificate Previewer Section */}
       <section style={{ maxWidth: '1280px', margin: '0 auto', padding: '60px 40px' }}>
         <CertificatePreviewer />
+      </section>
+
+      {/* Pet Style Customizer Studio */}
+      <section style={{ maxWidth: '1280px', margin: '0 auto', padding: '60px 40px' }}>
+        <PetCustomizerStudio />
+      </section>
+
+      {/* OS Installer Setup Guide */}
+      <section style={{ maxWidth: '1280px', margin: '0 auto', padding: '60px 40px' }}>
+        <OSInstallerGuide />
       </section>
 
       {/* Preset Pet Catalog Showcase */}

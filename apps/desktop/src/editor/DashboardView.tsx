@@ -5,7 +5,10 @@ import CustomPetCreator from './CustomPetCreator';
 import AdoptionCertificate from './AdoptionCertificate';
 import PetCareWidget from './PetCareWidget';
 import AuthModal from './AuthModal';
-import { Heart, Plus, Sparkles, Award, User, LogIn, LogOut } from 'lucide-react';
+import HabitatThemes, { HABITAT_THEMES, HabitatTheme } from './HabitatThemes';
+import TreatCatcherGame from './TreatCatcherGame';
+import PetJournal from './PetJournal';
+import { Heart, Plus, Sparkles, Award, User, LogIn, LogOut, Gamepad2, Trees, BookOpen } from 'lucide-react';
 
 interface DashboardViewProps {
   adoptedPets: AdoptedPet[];
@@ -13,9 +16,10 @@ interface DashboardViewProps {
 }
 
 export default function DashboardView({ adoptedPets, onAdoptPet }: DashboardViewProps) {
-  const [activeTab, setActiveTab] = useState<'my_pets' | 'adopt' | 'creator'>('my_pets');
+  const [activeTab, setActiveTab] = useState<'my_pets' | 'adopt' | 'creator' | 'habitats' | 'arcade' | 'journal'>('my_pets');
   const [customPets, setCustomPets] = useState<CustomPetManifest[]>([]);
   const [selectedCertificatePet, setSelectedCertificatePet] = useState<AdoptedPet | null>(null);
+  const [currentTheme, setCurrentTheme] = useState<HabitatTheme>(HABITAT_THEMES[0]);
 
   // User Auth State (NextAuth Integration)
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
@@ -92,6 +96,51 @@ export default function DashboardView({ adoptedPets, onAdoptPet }: DashboardView
           >
             Custom Creator
           </button>
+          <button
+            onClick={() => { setActiveTab('habitats'); setSelectedCertificatePet(null); }}
+            style={{
+              padding: '6px 14px',
+              borderRadius: '9999px',
+              border: 'none',
+              background: activeTab === 'habitats' ? 'rgba(16, 185, 129, 0.25)' : 'transparent',
+              color: activeTab === 'habitats' ? '#ffffff' : '#94a3b8',
+              fontWeight: 600,
+              fontSize: '0.85rem',
+              cursor: 'pointer'
+            }}
+          >
+            Habitats
+          </button>
+          <button
+            onClick={() => { setActiveTab('arcade'); setSelectedCertificatePet(null); }}
+            style={{
+              padding: '6px 14px',
+              borderRadius: '9999px',
+              border: 'none',
+              background: activeTab === 'arcade' ? 'rgba(245, 158, 11, 0.25)' : 'transparent',
+              color: activeTab === 'arcade' ? '#ffffff' : '#94a3b8',
+              fontWeight: 600,
+              fontSize: '0.85rem',
+              cursor: 'pointer'
+            }}
+          >
+            🕹️ Arcade
+          </button>
+          <button
+            onClick={() => { setActiveTab('journal'); setSelectedCertificatePet(null); }}
+            style={{
+              padding: '6px 14px',
+              borderRadius: '9999px',
+              border: 'none',
+              background: activeTab === 'journal' ? 'rgba(139, 92, 246, 0.25)' : 'transparent',
+              color: activeTab === 'journal' ? '#ffffff' : '#94a3b8',
+              fontWeight: 600,
+              fontSize: '0.85rem',
+              cursor: 'pointer'
+            }}
+          >
+            📖 Journal
+          </button>
         </nav>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -126,7 +175,7 @@ export default function DashboardView({ adoptedPets, onAdoptPet }: DashboardView
       </header>
 
       {/* Full-width Scrollable Container */}
-      <div style={{ flex: 1, overflowY: 'auto', width: '100%' }}>
+      <div style={{ flex: 1, overflowY: 'auto', width: '100%', background: currentTheme.bgGradient }}>
         {/* Main Centered Content Area */}
         <main style={{ maxWidth: '960px', margin: '0 auto', padding: '16px 20px' }}>
           {selectedCertificatePet ? (
@@ -185,6 +234,21 @@ export default function DashboardView({ adoptedPets, onAdoptPet }: DashboardView
 
             {activeTab === 'creator' && (
               <CustomPetCreator onSaveCustomPet={handleSaveCustomPet} />
+            )}
+
+            {activeTab === 'habitats' && (
+              <HabitatThemes
+                currentThemeId={currentTheme.id}
+                onSelectTheme={(theme) => setCurrentTheme(theme)}
+              />
+            )}
+
+            {activeTab === 'arcade' && (
+              <TreatCatcherGame />
+            )}
+
+            {activeTab === 'journal' && (
+              <PetJournal pets={adoptedPets} />
             )}
           </>
         )}
