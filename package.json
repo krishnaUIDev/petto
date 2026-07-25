@@ -10,5 +10,5 @@
     "build:website": "pnpm -F @petto/web build",
     "release": "node scripts/release.js"
   },
-  "version": "0.1.1"
+  "version": "0.1.2"
 }
