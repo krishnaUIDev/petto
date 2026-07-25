@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react';
 import LaptopMockup from './components/LaptopMockup';
+import WebPetSandbox from './components/WebPetSandbox';
+import CertificatePreviewer from './components/CertificatePreviewer';
 import { PRESET_PETS } from '@petto/shared';
 import { Apple, Monitor, Sparkles, Heart, FileCheck, Upload, Disc as Discord, Instagram, ArrowRight } from 'lucide-react';
 
@@ -139,6 +141,16 @@ export default function LandingPage() {
         <div>
           <LaptopMockup />
         </div>
+      </section>
+
+      {/* Live Web Sandbox Section */}
+      <section style={{ maxWidth: '1280px', margin: '0 auto', padding: '60px 40px', borderTop: '1px solid var(--bg-card-border)' }}>
+        <WebPetSandbox />
+      </section>
+
+      {/* Certificate Previewer Section */}
+      <section style={{ maxWidth: '1280px', margin: '0 auto', padding: '60px 40px' }}>
+        <CertificatePreviewer />
       </section>
 
       {/* Preset Pet Catalog Showcase */}
