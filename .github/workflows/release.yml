@@ -1,12 +1,45 @@
-name: Build & Publish Release
+name: Build & Publish Continuous Release
 
 on:
   push:
+    branches:
+      - main
     tags:
       - 'v*'
 
 jobs:
+  auto-bump:
+    name: Auto Bump Version
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, 'chore(release)')"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: Auto Bump Version Script
+        run: node scripts/release.js
+        env:
+          CI: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   publish-tauri:
+    name: Build Native Installers (.dmg & .exe)
+    needs: auto-bump
+    if: always()
     permissions:
       contents: write
     strategy:
@@ -38,14 +71,14 @@ jobs:
       - name: Install workspace dependencies
         run: pnpm install
 
-      - name: Build Tauri App
+      - name: Build Tauri App & Publish Release
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tagName: v__VERSION__
           releaseName: 'Petto Desktop v__VERSION__'
-          releaseBody: 'See release notes for changes.'
-          releaseDraft: true
+          releaseBody: 'Automated release build for Petto Desktop Companion.'
+          releaseDraft: false
           prerelease: false
           args: ${{ matrix.args }}
