@@ -100,20 +100,17 @@ export default function LandingPage() {
               background: 'rgba(139, 92, 246, 0.15)',
               color: 'var(--accent-violet)',
               fontWeight: 600,
-              fontSize: '0.85rem',
-              marginBottom: '24px',
-              border: '1px solid rgba(139, 92, 246, 0.3)'
-            }}
-          >
-            <Sparkles size={14} /> Desktop Companions Reinvented
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 14px', borderRadius: '9999px', background: 'rgba(139, 92, 246, 0.15)', border: '1px solid rgba(139, 92, 246, 0.3)', color: '#c084fc', fontSize: '0.82rem', fontWeight: 700, marginBottom: '20px' }}>
+            <Sparkles size={14} /> 14,820+ Companions Adopted Worldwide • 100% Free & Open Source
           </div>
+
           <h1
             style={{
               fontSize: '3.5rem',
-              fontWeight: 800,
+              fontWeight: 900,
               lineHeight: 1.1,
-              letterSpacing: '-1.5px',
-              marginBottom: '24px'
+              marginBottom: '24px',
+              letterSpacing: '-1px'
             }}
           >
             Meet your <br />
@@ -133,7 +130,8 @@ export default function LandingPage() {
 
           <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
             <a
-              href="https://github.com/krishnaUIDev/petto/releases/latest"
+              href="https://github.com/krishnaUIDev/petto/releases/latest/download/Petto.dmg"
+              download="Petto.dmg"
               target="_blank"
               rel="noreferrer"
               className="btn btn-primary"
@@ -141,7 +139,8 @@ export default function LandingPage() {
               <Apple size={20} /> Download for macOS (.dmg)
             </a>
             <a
-              href="https://github.com/krishnaUIDev/petto/releases/latest"
+              href="https://github.com/krishnaUIDev/petto/releases/latest/download/Petto-setup.exe"
+              download="Petto-setup.exe"
               target="_blank"
               rel="noreferrer"
               className="btn btn-secondary"

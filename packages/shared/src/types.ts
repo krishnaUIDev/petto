@@ -29,6 +29,12 @@ export interface CustomPetManifest {
 
 export type PetPersonality = 'cheerful' | 'playful' | 'calm' | 'curious';
 
+export interface PetCareStats {
+  hunger: number; // 0 to 100
+  happiness: number; // 0 to 100
+  energy: number; // 0 to 100
+}
+
 export interface AdoptedPet {
   id: string;
   userId: string;
@@ -42,6 +48,7 @@ export interface AdoptedPet {
   position: { x: number; y: number };
   customManifest?: CustomPetManifest;
   certificateDataUrl?: string;
+  stats?: PetCareStats;
   createdAt: string;
   updatedAt?: string;
 }

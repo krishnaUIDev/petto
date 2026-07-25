@@ -2,11 +2,12 @@
   "name": "petto",
   "private": true,
   "scripts": {
-    "dev:web": "pnpm -F @petto/web dev",
-    "dev:desktop": "pnpm -F @petto/desktop dev",
-    "dev:tauri": "pnpm -F @petto/desktop tauri dev",
-    "build:web": "pnpm -F @petto/web build",
-    "build:desktop": "pnpm -F @petto/desktop build",
-    "build:dmg": "pnpm -F @petto/desktop tauri build"
+    "dev": "pnpm -F @petto/desktop tauri dev",
+    "dev:app": "pnpm -F @petto/desktop tauri dev",
+    "dev:website": "pnpm -F @petto/web dev",
+    "dev:ui": "pnpm -F @petto/desktop dev",
+    "build:app": "pnpm -F @petto/desktop tauri build",
+    "build:website": "pnpm -F @petto/web build",
+    "release": "node scripts/release.js"
   }
 }

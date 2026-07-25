@@ -29,6 +29,25 @@ body {
   line-height: 1.5;
 }
 
+/* Custom Sleek Dark Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.6);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.6);
+}
+
 h1, h2, h3, h4, .brand-font {
   font-family: 'Outfit', sans-serif;
 }
@@ -56,11 +75,11 @@ a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  padding: 14px 28px;
+  gap: 8px;
+  padding: 8px 18px;
   border-radius: 9999px;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 0.88rem;
   cursor: pointer;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   border: none;
