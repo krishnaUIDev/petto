@@ -1,7 +1,7 @@
 {
   "name": "petto",
   "private": true,
-  "version": "0.1.1",
+  "version": "0.1.2",
   "scripts": {
     "dev": "pnpm -F @petto/desktop tauri dev",
     "dev:app": "pnpm -F @petto/desktop tauri dev",
@@ -12,11 +12,7 @@
     "build:website": "pnpm -F @petto/web build",
     "release": "node scripts/release.js"
   },
-<<<<<<< HEAD
   "dependencies": {
     "next": "^14.2.3"
   }
-=======
-  "version": "0.1.2"
->>>>>>> ac4d88ae123db9195b27c4f001a6c193071197ad
 }
