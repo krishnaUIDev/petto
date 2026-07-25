@@ -12,7 +12,11 @@
     "build:website": "pnpm -F @petto/web build",
     "release": "node scripts/release.js"
   },
+<<<<<<< HEAD
   "dependencies": {
     "next": "^14.2.3"
   }
+=======
+  "version": "0.1.2"
+>>>>>>> ac4d88ae123db9195b27c4f001a6c193071197ad
 }
