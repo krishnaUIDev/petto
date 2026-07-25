@@ -4,6 +4,8 @@ import AdoptionWizard from './AdoptionWizard';
 import CustomPetCreator from './CustomPetCreator';
 import AdoptionCertificate from './AdoptionCertificate';
 import PetCareWidget from './PetCareWidget';
+import PetChatBubble from './PetChatBubble';
+import WeatherSync from './WeatherSync';
 import AuthModal from './AuthModal';
 import HabitatThemes, { HABITAT_THEMES, HabitatTheme } from './HabitatThemes';
 import TreatCatcherGame from './TreatCatcherGame';
@@ -189,9 +191,12 @@ export default function DashboardView({ adoptedPets, onAdoptPet }: DashboardView
           <>
             {activeTab === 'my_pets' && (
               <div>
-                <h2 style={{ fontSize: '1.8rem', fontWeight: 800, marginBottom: '24px' }}>
-                  My Adopted <span className="gradient-text">Companions</span>
-                </h2>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+                  <h2 style={{ fontSize: '1.8rem', fontWeight: 800, margin: 0 }}>
+                    My Adopted <span className="gradient-text">Companions</span>
+                  </h2>
+                  <WeatherSync />
+                </div>
 
                 {adoptedPets.length === 0 ? (
                   <div style={{ padding: '60px 20px', textAlign: 'center', background: 'rgba(30, 41, 59, 0.4)', borderRadius: '24px', border: '1px dashed rgba(255, 255, 255, 0.1)' }}>
@@ -205,8 +210,9 @@ export default function DashboardView({ adoptedPets, onAdoptPet }: DashboardView
                 ) : (
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px' }}>
                     {adoptedPets.map((pet) => (
-                      <div key={pet.id} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                      <div key={pet.id} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                         <PetCareWidget pet={pet} />
+                        <PetChatBubble pet={pet} />
                         <button
                           className="btn btn-secondary"
                           style={{ width: '100%', padding: '8px', fontSize: '0.82rem' }}
