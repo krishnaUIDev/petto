@@ -49,6 +49,12 @@ export interface AdoptedPet {
   customManifest?: CustomPetManifest;
   certificateDataUrl?: string;
   stats?: PetCareStats;
+  breed?: string;
+  gender?: '♂️' | '♀️';
+  age?: string;
+  bio?: string;
+  badgeId?: string;
+  avatarUrl?: string;
   createdAt: string;
   updatedAt?: string;
 }
@@ -67,4 +73,10 @@ export interface PresetPet {
   rows: number;
   fps: number;
   animations: AnimationStateFrames;
+  breed?: string;
+  gender?: '♂️' | '♀️';
+  age?: string;
+  bio?: string;
+  badgeId?: string;
+  avatarUrl?: string;
 }

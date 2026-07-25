@@ -9,6 +9,8 @@ import OSInstallerGuide from './components/OSInstallerGuide';
 import { PRESET_PETS } from '@petto/shared';
 import { Apple, Monitor, Sparkles, Heart, FileCheck, Upload, Disc as Discord, Instagram, ArrowRight } from 'lucide-react';
 
+import Link from 'next/link';
+
 export default function LandingPage() {
   const [selectedPet, setSelectedPet] = useState(PRESET_PETS[0]);
 
@@ -51,11 +53,11 @@ export default function LandingPage() {
           </span>
         </div>
 
-        <nav style={{ display: 'flex', gap: '28px', fontSize: '0.95rem', fontWeight: 500, color: 'var(--text-muted)' }}>
-          <a href="#features" style={{ transition: 'color 0.2s' }}>Features</a>
-          <a href="#catalog" style={{ transition: 'color 0.2s' }}>Pet Catalog</a>
-          <a href="#certificate" style={{ transition: 'color 0.2s' }}>Adoption Certificate</a>
-          <a href="#creator" style={{ transition: 'color 0.2s' }}>Custom Creator</a>
+        <nav style={{ display: 'flex', gap: '24px', fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-muted)' }}>
+          <Link href="/" style={{ color: '#ffffff' }}>Home</Link>
+          <Link href="/sanctuary">Sanctuary Simulator</Link>
+          <Link href="/studio">Style Studio</Link>
+          <Link href="/certificate">Adoption Certificate</Link>
         </nav>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>

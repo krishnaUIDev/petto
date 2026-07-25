@@ -1,16 +1,10 @@
 import React, { useState } from 'react';
-import { AdoptedPet, CustomPetManifest, UserProfile } from '@petto/shared';
-import AdoptionWizard from './AdoptionWizard';
-import CustomPetCreator from './CustomPetCreator';
-import AdoptionCertificate from './AdoptionCertificate';
+import { AdoptedPet, CustomPetManifest, PresetPet, UserProfile } from '@petto/shared';
 import PetCareWidget from './PetCareWidget';
 import PetChatBubble from './PetChatBubble';
-import WeatherSync from './WeatherSync';
-import AuthModal from './AuthModal';
-import HabitatThemes, { HABITAT_THEMES, HabitatTheme } from './HabitatThemes';
-import TreatCatcherGame from './TreatCatcherGame';
-import PetJournal from './PetJournal';
-import { Heart, Plus, Sparkles, Award, User, LogIn, LogOut, Gamepad2, Trees, BookOpen } from 'lucide-react';
+import WoodenPetHouseGrid from './WoodenPetHouseGrid';
+import SanctuaryCertificateModal from './SanctuaryCertificateModal';
+import LivingRoomSanctuary from './LivingRoomSanctuary';
 
 interface DashboardViewProps {
   adoptedPets: AdoptedPet[];
@@ -18,248 +12,118 @@ interface DashboardViewProps {
 }
 
 export default function DashboardView({ adoptedPets, onAdoptPet }: DashboardViewProps) {
-  const [activeTab, setActiveTab] = useState<'my_pets' | 'adopt' | 'creator' | 'habitats' | 'arcade' | 'journal'>('my_pets');
-  const [customPets, setCustomPets] = useState<CustomPetManifest[]>([]);
-  const [selectedCertificatePet, setSelectedCertificatePet] = useState<AdoptedPet | null>(null);
-  const [currentTheme, setCurrentTheme] = useState<HabitatTheme>(HABITAT_THEMES[0]);
+  const [activeTab, setActiveTab] = useState<'living_room' | 'sanctuary_grid'>('sanctuary_grid');
+  const [selectedPresetPetForCertificate, setSelectedPresetPetForCertificate] = useState<PresetPet | null>(null);
+  const [showCareModal, setShowCareModal] = useState(false);
 
-  // User Auth State (NextAuth Integration)
+  // User Auth State
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
-  const [showAuthModal, setShowAuthModal] = useState(false);
 
-  const handleSaveCustomPet = (manifest: CustomPetManifest) => {
-    setCustomPets((prev) => [...prev, manifest]);
-    alert(`Custom pet "${manifest.name}" created! You can now adopt it in the Adoption Wizard.`);
-    setActiveTab('adopt');
+  const handleConfirmSanctuaryAdoption = (chosenName: string) => {
+    if (!selectedPresetPetForCertificate) return;
+
+    const newPet: AdoptedPet = {
+      id: `pet_${Date.now()}`,
+      userId: userProfile?.id || 'guest',
+      ownerName: userProfile?.name || 'Alex Parker',
+      name: chosenName || selectedPresetPetForCertificate.name,
+      speciesId: selectedPresetPetForCertificate.id,
+      speciesName: selectedPresetPetForCertificate.species,
+      breed: selectedPresetPetForCertificate.breed || selectedPresetPetForCertificate.species,
+      gender: selectedPresetPetForCertificate.gender || '♂️',
+      age: selectedPresetPetForCertificate.age || 'Age 1',
+      bio: selectedPresetPetForCertificate.bio || selectedPresetPetForCertificate.description,
+      badgeId: selectedPresetPetForCertificate.badgeId || `FD-26-${Date.now().toString(36).toUpperCase()}`,
+      birthday: new Date().toISOString(),
+      personality: selectedPresetPetForCertificate.defaultPersonality,
+      scale: 1.0,
+      position: { x: 100, y: 100 },
+      createdAt: new Date().toISOString()
+    };
+
+    onAdoptPet(newPet);
+    setSelectedPresetPetForCertificate(null);
+    setActiveTab('living_room');
   };
 
+  if (activeTab === 'living_room') {
+    return (
+      <>
+        <LivingRoomSanctuary
+          adoptedPets={adoptedPets}
+          onOpenDashboard={() => setShowCareModal(true)}
+          onAdoptMore={() => setActiveTab('sanctuary_grid')}
+        />
+        {showCareModal && (
+          <div
+            style={{
+              position: 'fixed',
+              inset: 0,
+              background: 'rgba(0,0,0,0.6)',
+              backdropFilter: 'blur(8px)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 100,
+              padding: '20px'
+            }}
+          >
+            <div
+              style={{
+                background: '#FAF6F0',
+                borderRadius: '24px',
+                padding: '32px',
+                maxWidth: '600px',
+                width: '100%',
+                maxHeight: '80vh',
+                overflowY: 'auto',
+                color: '#3A2E2B',
+                boxShadow: '0 20px 40px rgba(0,0,0,0.3)',
+                border: '1px solid #EFE6DD'
+              }}
+            >
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+                <h3 style={{ fontSize: '1.5rem', fontWeight: 800, margin: 0 }}>Pet Care & Companions</h3>
+                <button
+                  onClick={() => setShowCareModal(false)}
+                  style={{ background: '#EAE3D2', border: 'none', borderRadius: '50%', width: '32px', height: '32px', fontWeight: 800, cursor: 'pointer' }}
+                >
+                  ✕
+                </button>
+              </div>
+
+              {adoptedPets.length === 0 ? (
+                <p style={{ color: '#8D7B75' }}>No adopted pets yet. Click "Adopt More" to pick a companion!</p>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  {adoptedPets.map((pet) => (
+                    <div key={pet.id} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                      <PetCareWidget pet={pet} />
+                      <PetChatBubble pet={pet} />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+      </>
+    );
+  }
+
   return (
-    <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', overflow: 'hidden', background: '#0b0f17', color: '#ffffff', fontFamily: 'Inter, sans-serif' }}>
-      {/* Auth Modal */}
-      {showAuthModal && (
-        <AuthModal
-          onLoginSuccess={(user) => setUserProfile(user)}
-          onClose={() => setShowAuthModal(false)}
+    <>
+      <WoodenPetHouseGrid
+        onSelectPet={(pet) => setSelectedPresetPetForCertificate(pet)}
+        onBack={() => setActiveTab('living_room')}
+      />
+      {selectedPresetPetForCertificate && (
+        <SanctuaryCertificateModal
+          presetPet={selectedPresetPetForCertificate}
+          onConfirmAdoption={handleConfirmSanctuaryAdoption}
+          onClose={() => setSelectedPresetPetForCertificate(null)}
         />
       )}
-
-      {/* Dashboard Header */}
-      <header style={{ padding: '12px 24px', background: 'rgba(15, 23, 42, 0.95)', backdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', zIndex: 10 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: 'linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '1rem' }}>
-            🐾
-          </div>
-          <span style={{ fontSize: '1.25rem', fontWeight: 800, fontFamily: 'Outfit, sans-serif' }}>Petto Dashboard</span>
-        </div>
-
-        <nav style={{ display: 'flex', gap: '8px' }}>
-          <button
-            onClick={() => { setActiveTab('my_pets'); setSelectedCertificatePet(null); }}
-            style={{
-              padding: '6px 14px',
-              borderRadius: '9999px',
-              border: 'none',
-              background: activeTab === 'my_pets' ? 'rgba(139, 92, 246, 0.25)' : 'transparent',
-              color: activeTab === 'my_pets' ? '#ffffff' : '#94a3b8',
-              fontWeight: 600,
-              fontSize: '0.85rem',
-              cursor: 'pointer'
-            }}
-          >
-            My Pets ({adoptedPets.length})
-          </button>
-          <button
-            onClick={() => { setActiveTab('adopt'); setSelectedCertificatePet(null); }}
-            style={{
-              padding: '6px 14px',
-              borderRadius: '9999px',
-              border: 'none',
-              background: activeTab === 'adopt' ? 'rgba(139, 92, 246, 0.25)' : 'transparent',
-              color: activeTab === 'adopt' ? '#ffffff' : '#94a3b8',
-              fontWeight: 600,
-              fontSize: '0.85rem',
-              cursor: 'pointer'
-            }}
-          >
-            + Adopt Pet
-          </button>
-          <button
-            onClick={() => { setActiveTab('creator'); setSelectedCertificatePet(null); }}
-            style={{
-              padding: '6px 14px',
-              borderRadius: '9999px',
-              border: 'none',
-              background: activeTab === 'creator' ? 'rgba(236, 72, 153, 0.25)' : 'transparent',
-              color: activeTab === 'creator' ? '#ffffff' : '#94a3b8',
-              fontWeight: 600,
-              fontSize: '0.85rem',
-              cursor: 'pointer'
-            }}
-          >
-            Custom Creator
-          </button>
-          <button
-            onClick={() => { setActiveTab('habitats'); setSelectedCertificatePet(null); }}
-            style={{
-              padding: '6px 14px',
-              borderRadius: '9999px',
-              border: 'none',
-              background: activeTab === 'habitats' ? 'rgba(16, 185, 129, 0.25)' : 'transparent',
-              color: activeTab === 'habitats' ? '#ffffff' : '#94a3b8',
-              fontWeight: 600,
-              fontSize: '0.85rem',
-              cursor: 'pointer'
-            }}
-          >
-            Habitats
-          </button>
-          <button
-            onClick={() => { setActiveTab('arcade'); setSelectedCertificatePet(null); }}
-            style={{
-              padding: '6px 14px',
-              borderRadius: '9999px',
-              border: 'none',
-              background: activeTab === 'arcade' ? 'rgba(245, 158, 11, 0.25)' : 'transparent',
-              color: activeTab === 'arcade' ? '#ffffff' : '#94a3b8',
-              fontWeight: 600,
-              fontSize: '0.85rem',
-              cursor: 'pointer'
-            }}
-          >
-            🕹️ Arcade
-          </button>
-          <button
-            onClick={() => { setActiveTab('journal'); setSelectedCertificatePet(null); }}
-            style={{
-              padding: '6px 14px',
-              borderRadius: '9999px',
-              border: 'none',
-              background: activeTab === 'journal' ? 'rgba(139, 92, 246, 0.25)' : 'transparent',
-              color: activeTab === 'journal' ? '#ffffff' : '#94a3b8',
-              fontWeight: 600,
-              fontSize: '0.85rem',
-              cursor: 'pointer'
-            }}
-          >
-            📖 Journal
-          </button>
-        </nav>
-
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          {userProfile ? (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.85rem', color: '#ffffff', fontWeight: 600 }}>
-                {userProfile.image ? (
-                  <img src={userProfile.image} alt={userProfile.name} style={{ width: '24px', height: '24px', borderRadius: '50%' }} />
-                ) : (
-                  <User size={16} color="#8b5cf6" />
-                )}
-                {userProfile.name}
-              </div>
-              <button
-                onClick={() => setUserProfile(null)}
-                title="Sign Out"
-                style={{ background: 'transparent', border: 'none', color: '#94a3b8', cursor: 'pointer', display: 'flex', alignItems: 'center' }}
-              >
-                <LogOut size={16} />
-              </button>
-            </div>
-          ) : (
-            <button
-              className="btn btn-secondary"
-              onClick={() => setShowAuthModal(true)}
-              style={{ padding: '6px 14px', fontSize: '0.82rem' }}
-            >
-              <LogIn size={14} /> Sign In
-            </button>
-          )}
-        </div>
-      </header>
-
-      {/* Full-width Scrollable Container */}
-      <div style={{ flex: 1, overflowY: 'auto', width: '100%', background: currentTheme.bgGradient }}>
-        {/* Main Centered Content Area */}
-        <main style={{ maxWidth: '960px', margin: '0 auto', padding: '16px 20px' }}>
-          {selectedCertificatePet ? (
-          <div>
-            <button className="btn btn-secondary" onClick={() => setSelectedCertificatePet(null)} style={{ marginBottom: '24px' }}>
-              ← Back to My Pets
-            </button>
-            <AdoptionCertificate pet={selectedCertificatePet} />
-          </div>
-        ) : (
-          <>
-            {activeTab === 'my_pets' && (
-              <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-                  <h2 style={{ fontSize: '1.8rem', fontWeight: 800, margin: 0 }}>
-                    My Adopted <span className="gradient-text">Companions</span>
-                  </h2>
-                  <WeatherSync />
-                </div>
-
-                {adoptedPets.length === 0 ? (
-                  <div style={{ padding: '60px 20px', textAlign: 'center', background: 'rgba(30, 41, 59, 0.4)', borderRadius: '24px', border: '1px dashed rgba(255, 255, 255, 0.1)' }}>
-                    <div style={{ fontSize: '3rem', marginBottom: '12px' }}>🐾</div>
-                    <h3 style={{ fontSize: '1.3rem', fontWeight: 700, marginBottom: '8px' }}>No Pets Adopted Yet</h3>
-                    <p style={{ color: '#94a3b8', marginBottom: '24px' }}>Adopt your first companion to see them roam on your desktop!</p>
-                    <button className="btn btn-primary" onClick={() => setActiveTab('adopt')}>
-                      <Plus size={18} /> Adopt Your First Pet
-                    </button>
-                  </div>
-                ) : (
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px' }}>
-                    {adoptedPets.map((pet) => (
-                      <div key={pet.id} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                        <PetCareWidget pet={pet} />
-                        <PetChatBubble pet={pet} />
-                        <button
-                          className="btn btn-secondary"
-                          style={{ width: '100%', padding: '8px', fontSize: '0.82rem' }}
-                          onClick={() => setSelectedCertificatePet(pet)}
-                        >
-                          <Award size={14} /> View Official Birth Certificate 📜
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
-
-            {activeTab === 'adopt' && (
-              <AdoptionWizard
-                onAdoptFinished={(pet) => {
-                  onAdoptPet(pet);
-                  setActiveTab('my_pets');
-                }}
-                customPets={customPets}
-                userProfile={userProfile}
-              />
-            )}
-
-            {activeTab === 'creator' && (
-              <CustomPetCreator onSaveCustomPet={handleSaveCustomPet} />
-            )}
-
-            {activeTab === 'habitats' && (
-              <HabitatThemes
-                currentThemeId={currentTheme.id}
-                onSelectTheme={(theme) => setCurrentTheme(theme)}
-              />
-            )}
-
-            {activeTab === 'arcade' && (
-              <TreatCatcherGame />
-            )}
-
-            {activeTab === 'journal' && (
-              <PetJournal pets={adoptedPets} />
-            )}
-          </>
-        )}
-      </main>
-      </div>
-    </div>
+    </>
   );
 }
